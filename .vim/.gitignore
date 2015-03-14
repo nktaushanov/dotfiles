@@ -1,1 +1,4 @@
 vundle/*
+bundle/*
+swapdir/*
+undodir/*

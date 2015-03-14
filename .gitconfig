@@ -1,37 +1,47 @@
 [include]
-    path = ~/.gitconfig_user
+  path = ~/.gitconfig_user
 [core]
-  	editor = vim
-  	excludesfile = ~/.gitignore_global
+  editor = vim
+  excludesfile = ~/.gitignore_global
 [color]
-  	ui = true
+  ui = true
 [alias]
-    a = add
-    c = commit
-    ca = commit -a
-    cm = commit -m
-    cob = checkout -b
-    ap = add --patch
-    p = add --patch
-    s = status
-    amend = commit --amend -c HEAD
-    gzip = !git archive HEAD | gzip > $PWD.tar.gz
-    files = show --pretty="format:" --name-only
-    l = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
-    last = log -1 HEAD --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
-    lol = log --pretty=oneline --abbrev-commit --graph --decorate
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-    staged = diff --cached
-    squash = rebase -i @{u}
-    undo = reset --soft HEAD^
-    unstage = reset HEAD --
-    unstaged = diff
+  a = add
+  b = branch
+  c = commit
+  ca = commit -a
+  cm = commit -m
+  co = checkout
+  cob = checkout -b
+  s = status
+  amend = commit --amend -c HEAD
+  gzip = !git archive HEAD | gzip > $PWD.tar.gz
+  files = show --pretty="format:" --name-only
+  l = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+  last = log -1 HEAD --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+  lol = log --pretty=oneline --abbrev-commit --graph --decorate
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  staged = diff --cached
+  squash = rebase -i
+  undo = reset --soft HEAD^
+  unstage = reset HEAD --
+  unstaged = diff
 [credential]
-  	helper = cache --timeout=604800
-[diff]
-  	tool = meld
-    external = external_git_diff
-[difftool "meld"]
-    cmd = meld \"$LOCAL\" \"$REMOTE\"
+  helper = cache --timeout=604800
 [difftool]
-	  prompt = false
+  prompt = false
+[push]
+  default = simple
+[color "status"]
+  ; added = yellow
+  ; changed = green
+  untracked = cyan
+[color "branch"]
+  current = white reverse
+  local = white
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold # line info
+  old = red # deletions
+  new = green # additions

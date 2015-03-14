@@ -5,8 +5,6 @@ filetype plugin on
 set nocompatible
 
 set number
-" set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
-set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
 
 autocmd BufWritePre * :%s/\s\+$//e
 
@@ -18,7 +16,6 @@ call vundle#begin()
 
 " Bundles
 Plugin 'bling/vim-airline'
-Plugin 'git@github.com:vim-scripts/netrw.vim.git'
 Plugin 'SingleCompile'
 Plugin 'Tagbar'
 Plugin 'The-NERD-tree'
@@ -41,7 +38,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'rking/ag.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ekalinin/Dockerfile.vim'
-
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'solarnz/thrift.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -78,18 +76,6 @@ map <F3> :TagbarToggle<CR>
 " Tagbar
 let g:tagbar_compact = 1
 let g:tagbar_autofocus = 1
-
-" Use CTRL+S to save file changes
-command -nargs=0 -bar Update if &modified
-                           \|    if empty(bufname('%'))
-                           \|        browse confirm write
-                           \|    else
-                           \|        confirm write
-                           \|    endif
-                           \|endif
-
-nnoremap <silent> <C-S> :<C-u>Update<CR>
-inoremap <c-s> <c-o>:Update<CR>
 
 " Colors
 set  t_Co=256
@@ -129,6 +115,9 @@ endif
 " Mouse
 set mouse=a
 
+" Fix mouse scroll
+set mouse=a
+
 " ctrlp
 let g:ctrlp_max_files = 0
 " The Silver Searcher
@@ -149,3 +138,12 @@ noremap <leader>s :Ag
 
 " bind K to search grep word under the cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
+
+" Better scroll
+set scrolloff=5
+
+" Tabs
+noremap <C-t> :tabnew<CR>
+
+" Tab size
+set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
