@@ -19,8 +19,10 @@ install-git:
 
 install-tmux:
 	ln -s `pwd`/.tmux.conf ~/.tmux.conf
+	ln -s `pwd`/.tmux-osx.conf ~/.tmux-osx.conf
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 install-bash:
+	ln -s `pwd`/.local_conf ~/.local_conf
 	ln -s `pwd`/.bash_aliases ~/.bash_aliases
 	ln -s `pwd`/.bash_profile ~/.bash_profile
-

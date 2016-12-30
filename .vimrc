@@ -57,7 +57,7 @@ let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
 
 " Setup pathogen
-execute pathogen#infect()
+" execute pathogen#infect()
 
 " Move lines with ctrl + j/k
 nnoremap <C-J> :m .+1<CR>==
@@ -138,6 +138,11 @@ noremap <leader>s :Ag
 " bind K to search grep word under the cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
 
+vnoremap K y:Ag "<C-R>""<CR>
+vnoremap // y/<C-R>"<CR>
+
+nmap f <Plug>(easymotion-overwin-f2)
+
 " Better scroll
 set scrolloff=5
 
@@ -146,3 +151,4 @@ noremap <C-t> :tabnew<CR>
 
 " Tab size
 set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
