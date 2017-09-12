@@ -10,6 +10,7 @@ install-vim: install-git
 	mkdir ~/.vim/swapdir
 	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 	vim +BundleInstall +qall
+	wget https://raw.githubusercontent.com/chriskempson/tomorrow-theme/master/vim/colors/Tomorrow-Night.vim -P ~/.vim/colors/
 
 install-git:
 	ln -s `pwd`/.gitconfig ~/.gitconfig
