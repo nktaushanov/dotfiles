@@ -49,4 +49,6 @@ if [ -d $GNUMAN_PATH ]; then
 fi
 
 # Load mchine local profile
-source ~/.local_conf/.bash_profile
+if [ -f ~/.local_conf/.bash_profile ]; then
+  source ~/.local_conf/.bash_profile
+fi
