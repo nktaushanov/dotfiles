@@ -44,6 +44,8 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'solarnz/thrift.vim'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'vim-latex/vim-latex'
+Plugin 'hdima/python-syntax'
 
 call vundle#end()
 filetype plugin indent on
@@ -77,6 +79,8 @@ let g:airline_powerline_fonts = 1
 
 " NERDTree
 map <F2> :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$']
+
 let NERDTreeIgnore = ['\.pyc$']
 
 " Tagbar
@@ -162,4 +166,5 @@ noremap <C-t> :tabnew<CR>
 
 " Tab size
 set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+
 
