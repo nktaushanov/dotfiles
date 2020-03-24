@@ -13,7 +13,14 @@
   cm = commit -m
   co = checkout
   cob = checkout -b
+  col = "!git checkout $(git reflog | grep -i \"checkout: moving\" | head -n1 | cut -d ' ' -f6)"
+  ml = "!git merge $(git reflog | grep -i \"checkout: moving\" | head -n1 | cut -d ' ' -f6)"
+  cleanup = "!git branch --merged | grep  -v '\\*\\|master' | xargs -n 1 git branch -d"
   s = status
+  p = "!f() { (CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD); \
+    ORIGIN_BRANCH=sg/${1:-$CURRENT_BRANCH}; \
+    git push origin $CURRENT_BRANCH:$ORIGIN_BRANCH) }; \
+    f"
   amend = commit --amend -c HEAD
   gzip = !git archive HEAD | gzip > $PWD.tar.gz
   files = show --pretty="format:" --name-only
@@ -45,3 +52,27 @@
   frag = magenta bold # line info
   old = red # deletions
   new = green # additions
+[web]
+	browser = google-chrome
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[user]
+	name = Nikola Taushanov
+	email = nikola@leanplum.com
+[merge]
+  tool = meld
+[mergetool]
+  prompt = false
+[mergetool "meld"]
+  trustExitCode = true
+  cmd = open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"
+[diff]
+  tool = meld
+[difftool]
+  prompt = false
+[difftool "meld"]
+  trustExitCode = true
+  cmd = open -W -a Meld --args \"$LOCAL\" \"$REMOTE\"

@@ -26,16 +26,10 @@ if [ -f ~/.git-completion.bash  ]; then
   . ~/.git-completion.bash
 fi
 
-# Aliases
-source ~/.bash_aliases
-
-if [ -x "$(command -v docker-machine)" ]; then
-  eval $(docker-machine env default)
-fi
-
 # NVM
 export NVM_DIR="/Users/nikola/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+
 
 # Default to gnu utils and man pages
 GNUBIN_PATH=/usr/local/opt/coreutils/libexec/gnubin
@@ -49,6 +43,11 @@ if [ -d $GNUMAN_PATH ]; then
 fi
 
 # Load mchine local profile
-if [ -f ~/.local_conf/.bash_profile ]; then
-  source ~/.local_conf/.bash_profile
-fi
+source ~/.local_conf/.bash_profile
+
+# Aliases
+source ~/.bash_aliases
+
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

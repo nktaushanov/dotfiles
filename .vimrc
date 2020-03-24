@@ -14,9 +14,12 @@ set autoindent
 set rtp+=~/.vim/bundle/vundle
 call vundle#begin()
 
+let g:vundle_default_git_proto = 'git'
+
 " Bundles
 Plugin 'bling/vim-airline'
 Plugin 'SingleCompile'
+Plugin 'vim-soy'
 Plugin 'Tagbar'
 Plugin 'The-NERD-tree'
 Plugin 'altercation/vim-colors-solarized'
@@ -38,8 +41,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'rking/ag.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'solarnz/thrift.vim'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'leafgarland/typescript-vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -59,6 +63,8 @@ let g:loaded_netrwPlugin = 1
 " Setup pathogen
 " execute pathogen#infect()
 
+set guifont=Monaco\ for\ Powerline:h12
+
 " Move lines with ctrl + j/k
 nnoremap <C-J> :m .+1<CR>==
 nnoremap <C-K> :m .-2<CR>==
@@ -71,9 +77,10 @@ let g:airline_powerline_fonts = 1
 
 " NERDTree
 map <F2> :NERDTreeToggle<CR>
-map <F3> :TagbarToggle<CR>
+let NERDTreeIgnore = ['\.pyc$']
 
 " Tagbar
+map <F3> :TagbarToggle<CR>
 let g:tagbar_compact = 1
 let g:tagbar_autofocus = 1
 
@@ -89,6 +96,10 @@ map <F8> :SCCompile<cr>
 map <F9> :SCCompileRun<cr>
 autocmd Filetype cpp map <buffer> <F8> :SCCompileAF -std=c++11 <CR>
 autocmd Filetype cpp map <buffer> <F9> :SCCompileRunAF -std=c++11 <CR>
+
+" YouCompleteMe
+let g:ycm_server_python_interpreter = '/Users/nikola/anaconda3/envs/py27/bin/python'
+let g:ycm_server_keep_logfiles = 1
 
 " Undo dir
 set undodir=~/.vim/undodir
