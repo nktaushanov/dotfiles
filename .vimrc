@@ -17,15 +17,13 @@ call vundle#begin()
 let g:vundle_default_git_proto = 'git'
 
 " Bundles
+Plugin 'gmarik/vundle'
+Plugin 'fatih/vim-go'
 Plugin 'bling/vim-airline'
-Plugin 'SingleCompile'
-Plugin 'vim-soy'
 Plugin 'Tagbar'
 Plugin 'The-NERD-tree'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'gmarik/vundle'
-Plugin 'hlissner/vim-multiedit'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-commentary'
@@ -36,7 +34,6 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'rking/ag.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -94,16 +91,6 @@ colorscheme Tomorrow-Night
 set cursorline
 set colorcolumn=80
 set hlsearch
-
-" SimpleCompile
-map <F8> :SCCompile<cr>
-map <F9> :SCCompileRun<cr>
-autocmd Filetype cpp map <buffer> <F8> :SCCompileAF -std=c++11 <CR>
-autocmd Filetype cpp map <buffer> <F9> :SCCompileRunAF -std=c++11 <CR>
-
-" YouCompleteMe
-let g:ycm_server_python_interpreter = '/Users/nikola/anaconda3/envs/py27/bin/python'
-let g:ycm_server_keep_logfiles = 1
 
 " Undo dir
 set undodir=~/.vim/undodir
@@ -166,5 +153,4 @@ noremap <C-t> :tabnew<CR>
 
 " Tab size
 set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
-
 

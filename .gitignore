@@ -1,3 +1,4 @@
 .local_conf/.*
 !.local_conf/.gitkeep
+nvim/bundle
 
