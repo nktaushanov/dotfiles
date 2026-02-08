@@ -1,4 +1,5 @@
 install: install-nvim \
+	install-nvim-new \
 	install-git \
 	install-tmux \
 	install-bash
@@ -9,6 +10,11 @@ install-nvim:
 	mkdir ~/.config/nvim/swapdir
 	curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	nvim +PlugInstall +qall
+
+install-nvim-new:
+	ln -s `pwd`/nvim-new ~/.config/nvim-new
+	mkdir -p ~/.local/state/nvim-new/undo
+	mkdir -p ~/.local/state/nvim-new/swap
 
 # install-vim:
 # 	ln -s `pwd`/.vim ~/.vim
