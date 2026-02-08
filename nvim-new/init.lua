@@ -36,6 +36,44 @@ require("lazy").setup({
       vim.cmd.colorscheme("catppuccin")
     end,
   },
+  {
+    "folke/sidekick.nvim",
+    opts = {
+      nes = { enabled = false },
+      cli = {
+        win = {
+          layout = "right",
+          split = {
+            width = 80,
+          },
+        },
+      },
+    },
+    keys = {
+      {
+        "<leader>aa",
+        function()
+          require("sidekick.cli").toggle()
+        end,
+        desc = "Sidekick Toggle",
+      },
+      {
+        "<leader>as",
+        function()
+          require("sidekick.cli").select()
+        end,
+        desc = "Sidekick Select CLI",
+      },
+      {
+        "<leader>av",
+        function()
+          require("sidekick.cli").send({ msg = "{selection}" })
+        end,
+        mode = "x",
+        desc = "Sidekick Send Selection",
+      },
+    },
+  },
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
