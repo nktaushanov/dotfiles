@@ -10,9 +10,17 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 set autoindent
 
-call plug#begin()
+let s:plug_path = stdpath('data') . '/site/autoload/plug.vim'
+if empty(glob(s:plug_path))
+  silent! execute '!curl -fLo ' . shellescape(s:plug_path) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+if filereadable(s:plug_path)
+  execute 'source ' . s:plug_path
+endif
+
+call plug#begin(stdpath('data') . '/plugged')
 " Bundles
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go'
 Plug 'bling/vim-airline'
@@ -83,7 +91,7 @@ let NERDTreeIgnore = ['\.pyc$']
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " Open the existing NERDTree on each new tab.
-autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+autocmd BufWinEnter * if getcmdwintype() == '' && exists(':NERDTreeMirror') | silent NERDTreeMirror | endif
 
 " Tagbar
 map <F3> :TagbarToggle<CR>
@@ -92,14 +100,14 @@ let g:tagbar_autofocus = 1
 
 " Colors
 set  t_Co=256
-colorscheme dracula
+silent! colorscheme dracula
 set cursorline
 set colorcolumn=80
 set hlsearch
 
 " Undo dir
-set undodir=~/.vim/undodir
-set dir=~/.vim/swapdir
+set undodir=~/.config/nvim/undodir
+set dir=~/.config/nvim/swapdir
 
 " Indentation
 vnoremap > >gv
@@ -226,13 +234,3 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 let g:go_def_mapping_enabled = 0
-
-let g:Lf_ShortcutF = "<leader>ff"
-let g:Lf_WindowPosition = 'popup'
-noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
-noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
-
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Monaco\ for\ Powerline" }
-
