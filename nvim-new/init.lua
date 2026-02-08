@@ -84,6 +84,18 @@ require("lazy").setup({
       },
     },
   },
+  {
+    "petertriho/nvim-scrollbar",
+    opts = {},
+  },
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {},
+  },
+  {
+    "sindrets/diffview.nvim",
+    opts = {},
+  },
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -103,6 +115,10 @@ vim.keymap.set("n", "<Leader>p", '"+p', { noremap = true })
 vim.keymap.set("v", "<Leader>y", '"+y', { noremap = true })
 
 vim.keymap.set("n", "<C-t>", ":tabnew<CR>", { noremap = true })
+
+vim.keymap.set("n", "<Leader>gb", ":Gitsigns toggle_current_line_blame<CR>", { noremap = true })
+vim.keymap.set("n", "<Leader>gd", ":DiffviewOpen<CR>", { noremap = true })
+vim.keymap.set("n", "<Leader>gD", ":DiffviewClose<CR>", { noremap = true })
 
 vim.o.langmap = vim.o.langmap
   .. "чявертъуиопшщасдфгхйклзьцжбнмЧЯВЕРТЪУИОПШЩАСДФГХЙКЛЗѝЦЖБНМ;`qwertyuiop[]asdfghjklzxcvbnm~QWERTYUIOP{}ASDFGHJKLZXCVBNM,ю\\,Ю\\|,"
