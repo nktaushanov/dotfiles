@@ -1,4 +1,11 @@
 .local_conf/.*
 !.local_conf/.gitkeep
 nvim/bundle
-
+nvim/autoload/
+nvim/.cache/
+nvim/.local/share/nvim/
+nvim/.local/state/nvim/
+nvim/coc/extensions/
+nvim/shada/
+nvim/swapdir/
+nvim/undodir/

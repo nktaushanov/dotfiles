@@ -1,0 +1,144 @@
+diff --git a/.bash_aliases b/.bash_aliases
+index 6557a98..db70965 100755
+--- a/.bash_aliases
++++ b/.bash_aliases
+@@ -1,19 +1,15 @@
+-# Add scripts in tools and then add an alias for them like this:
+-# alias greps="$DIR/tools/greps.sh"
+-
+-if command_exits docker-machine; then
++# docker
++if [ -x "$(command -v docker-machine)" ]; then
+   alias start_docker="docker-machine start default"
+   alias docker_env="eval $(docker-machine env)"
+ fi
+ 
+-if [ "$(uname)" == "Darwin" ]; then
+-  if command_exits gls; then
+-    alias ls="gls --color"
+-    alias ll="gls --color -al --group-directories-first"
+-  fi
++# ls
++alias ls="ls --color"
++alias ll="ls --color -al --group-directories-first"
+ 
+-  if command_exits gdate; then
+-    alias date=gdate
+-  fi
++# Load mchine local profile
++if [ -f ~/.local_conf/.bash_aliases ]; then
++  source ~/.local_conf/.bash_aliases
+ fi
+ 
+diff --git a/.bash_profile b/.bash_profile
+index e53510f..329a3fd 100755
+--- a/.bash_profile
++++ b/.bash_profile
+@@ -14,9 +14,6 @@ get_current_file_dir
+ 
+ source $DIR/tools/helpers.sh
+ 
+-# Homebrew
+-export PATH="/usr/local/bin:$PATH"
+-
+ # Colors
+ PS1='\[\e[0;32m\]\u\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]λ\[\e[m\] \[\e[1;37m\]'
+ export TERM=xterm-256color
+@@ -32,8 +29,24 @@ fi
+ # Aliases
+ source ~/.bash_aliases
+ 
+-# Docker
+-if command_exits docker-machine; then
+-  eval "$(docker-machine env default)"
++if [ -x "$(command -v docker-machine)" ]; then
++  eval $(docker-machine env default)
++fi
++
++# NVM
++export NVM_DIR="/Users/nikola/.nvm"
++[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
++
++# Default to gnu utils and man pages
++GNUBIN_PATH=/usr/local/opt/coreutils/libexec/gnubin
++if [ -d $GNUBIN_PATH ]; then
++  PATH="$GNUBIN_PATH:$PATH"
++fi
++
++GNUMAN_PATH=/usr/local/opt/coreutils/libexec/gnuman
++if [ -d $GNUMAN_PATH ]; then
++  MANPATH="$GNUMAN_PATH:$MANPATH"
+ fi
+ 
++# Load mchine local profile
++source ~/.local_conf/.bash_profile
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..78a0f10
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,3 @@
++.local_conf/.*
++!.local_conf/.gitkeep
++
+diff --git a/.local_conf/.gitkeep b/.local_conf/.gitkeep
+new file mode 100644
+index 0000000..e69de29
+diff --git a/.tmux.conf b/.tmux.conf
+index 7017611..0b5265b 100644
+--- a/.tmux.conf
++++ b/.tmux.conf
+@@ -54,3 +54,11 @@ bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft=
+ bind '"' split-window -c "#{pane_current_path}"
+ bind % split-window -h -c "#{pane_current_path}"
+ bind c new-window -c "#{pane_current_path}"
++
++# Plugins
++set -g @plugin 'tmux-plugins/tpm'
++set -g @plugin 'tmux-plugins/tmux-open'
++
++# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
++run '~/.tmux/plugins/tpm/tpm'
++
+diff --git a/.vimrc b/.vimrc
+index a95adfd..171d924 100755
+--- a/.vimrc
++++ b/.vimrc
+@@ -57,7 +57,7 @@ let g:loaded_netrw = 1
+ let g:loaded_netrwPlugin = 1
+ 
+ " Setup pathogen
+-execute pathogen#infect()
++" execute pathogen#infect()
+ 
+ " Move lines with ctrl + j/k
+ nnoremap <C-J> :m .+1<CR>==
+@@ -138,6 +138,11 @@ noremap <leader>s :Ag
+ " bind K to search grep word under the cursor
+ nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR><CR>
+ 
++vnoremap K y:Ag "<C-R>""<CR>
++vnoremap // y/<C-R>"<CR>
++
++nmap f <Plug>(easymotion-overwin-f2)
++
+ " Better scroll
+ set scrolloff=5
+ 
+@@ -146,3 +151,4 @@ noremap <C-t> :tabnew<CR>
+ 
+ " Tab size
+ set tabstop=2 softtabstop=2 shiftwidth=2 expandtab
++
+diff --git a/Makefile b/Makefile
+index 80db455..03bb1db 100644
+--- a/Makefile
++++ b/Makefile
+@@ -21,6 +21,6 @@ install-tmux:
+ 	ln -s `pwd`/.tmux.conf ~/.tmux.conf
+ 
+ install-bash:
++	ln -s `pwd`/.local_conf ~/.local_conf
+ 	ln -s `pwd`/.bash_aliases ~/.bash_aliases
+ 	ln -s `pwd`/.bash_profile ~/.bash_profile
+-

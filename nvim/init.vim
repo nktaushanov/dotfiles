@@ -10,17 +10,13 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 set autoindent
 
-" Setup vundle
-set rtp+=~/.vim/bundle/vundle
-call vundle#begin()
-
 call plug#begin()
-
 " Bundles
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go'
 Plug 'bling/vim-airline'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'preservim/tagbar'
 Plug 'preservim/nerdtree'
 Plug 'altercation/vim-colors-solarized'
@@ -96,7 +92,7 @@ let g:tagbar_autofocus = 1
 
 " Colors
 set  t_Co=256
-colorscheme Tomorrow-Night
+colorscheme dracula
 set cursorline
 set colorcolumn=80
 set hlsearch
