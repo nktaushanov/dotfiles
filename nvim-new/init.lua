@@ -89,6 +89,16 @@ require("lazy").setup({
     opts = {},
   },
   {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {},
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
@@ -205,6 +215,9 @@ vim.keymap.set("n", "<Leader>fb", ":Telescope buffers<CR>", { noremap = true })
 vim.keymap.set("n", "<Leader>fh", ":Telescope help_tags<CR>", { noremap = true })
 vim.keymap.set("n", "<Leader>fs", ":Telescope lsp_document_symbols<CR>", { noremap = true })
 vim.keymap.set("n", "<Leader>fS", ":Telescope lsp_workspace_symbols<CR>", { noremap = true })
+
+vim.keymap.set("n", "<Leader>e", ":Neotree toggle<CR>", { noremap = true })
+vim.keymap.set("n", "<F2>", ":Neotree toggle<CR>", { noremap = true })
 
 vim.o.langmap = vim.o.langmap
   .. "чявертъуиопшщасдфгхйклзьцжбнмЧЯВЕРТЪУИОПШЩАСДФГХЙКЛЗѝЦЖБНМ;`qwertyuiop[]asdfghjklzxcvbnm~QWERTYUIOP{}ASDFGHJKLZXCVBNM,ю\\,Ю\\|,"
