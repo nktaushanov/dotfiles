@@ -96,7 +96,42 @@ require("lazy").setup({
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
-    opts = {},
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+        },
+      },
+      window = {
+        mappings = {
+          ["o"] = "system_open",
+        },
+      },
+      commands = {
+        system_open = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          if vim.fn.has("mac") == 1 then
+            vim.fn.jobstart({ "open", path }, { detach = true })
+            return
+          end
+          if vim.fn.has("unix") == 1 then
+            vim.fn.jobstart({ "xdg-open", path }, { detach = true })
+            return
+          end
+          if vim.fn.has("win32") == 1 then
+            local p
+            local lastSlashIndex = path:match("^.+()\\[^\\]*$")
+            if lastSlashIndex then
+              p = path:sub(1, lastSlashIndex - 1)
+            else
+              p = path
+            end
+            vim.cmd("silent !start explorer " .. p)
+          end
+        end,
+      },
+    },
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -216,9 +251,6 @@ vim.keymap.set("n", "<Leader>fh", ":Telescope help_tags<CR>", { noremap = true }
 vim.keymap.set("n", "<Leader>fs", ":Telescope lsp_document_symbols<CR>", { noremap = true })
 vim.keymap.set("n", "<Leader>fS", ":Telescope lsp_workspace_symbols<CR>", { noremap = true })
 
-vim.keymap.set("n", "<Leader>e", ":Neotree toggle<CR>", { noremap = true })
-vim.keymap.set("n", "<F2>", ":Neotree toggle<CR>", { noremap = true })
-
 vim.o.langmap = vim.o.langmap
   .. "чявертъуиопшщасдфгхйклзьцжбнмЧЯВЕРТЪУИОПШЩАСДФГХЙКЛЗѝЦЖБНМ;`qwertyuiop[]asdfghjklzxcvbnm~QWERTYUIOP{}ASDFGHJKLZXCVBNM,ю\\,Ю\\|,"
 
@@ -226,3 +258,6 @@ local state_dir = vim.fn.stdpath("state")
 vim.o.undodir = state_dir .. "/undo"
 vim.o.directory = state_dir .. "/swap"
 vim.o.undofile = true
+
+vim.keymap.set("n", "<Leader>e", ":Neotree toggle<CR>", { noremap = true })
+vim.keymap.set("n", "<F2>", ":Neotree toggle<CR>", { noremap = true })
