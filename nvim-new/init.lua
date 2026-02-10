@@ -154,18 +154,30 @@ require("lazy").setup({
     end,
   },
   {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-      },
-    },
+    "junegunn/fzf",
+    build = "./install --bin",
+  },
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
     config = function()
-      local telescope = require("telescope")
-      telescope.setup({})
-      telescope.load_extension("fzf")
+      local fzf = require("fzf-lua")
+      vim.keymap.set("n", "<F1>", fzf.help_tags, { noremap = true, silent = true, desc = "FZF help tags" })
+      vim.keymap.set("n", "<space>s", function()
+        fzf.grep_project({ fzf_opts = { ["--nth"] = false } })
+      end, { noremap = true, silent = true, desc = "FZF grep (path + content)" })
+      vim.keymap.set("n", ",s", fzf.grep_project, { noremap = true, silent = true, desc = "FZF grep (content only)" })
+      vim.keymap.set("n", ",S", fzf.resume, { noremap = true, silent = true, desc = "FZF resume" })
+      vim.keymap.set("v", "<space>s", fzf.grep_visual, { noremap = true, silent = true, desc = "FZF grep selection" })
+      vim.keymap.set("v", ",s", fzf.grep_visual, { noremap = true, silent = true, desc = "FZF grep selection" })
+      vim.keymap.set("n", ",b", fzf.buffers, { noremap = true, silent = true, desc = "FZF buffers" })
+      vim.keymap.set(
+        "n",
+        "<space>`",
+        fzf.grep_curbuf,
+        { noremap = true, silent = true, desc = "FZF grep current buffer" }
+      )
     end,
   },
   {
@@ -244,12 +256,24 @@ vim.keymap.set("n", "<Leader>gb", ":Gitsigns toggle_current_line_blame<CR>", { n
 vim.keymap.set("n", "<Leader>gd", ":DiffviewOpen<CR>", { noremap = true })
 vim.keymap.set("n", "<Leader>gD", ":DiffviewClose<CR>", { noremap = true })
 
-vim.keymap.set("n", "<Leader>ff", ":Telescope find_files<CR>", { noremap = true })
-vim.keymap.set("n", "<Leader>fg", ":Telescope live_grep<CR>", { noremap = true })
-vim.keymap.set("n", "<Leader>fb", ":Telescope buffers<CR>", { noremap = true })
-vim.keymap.set("n", "<Leader>fh", ":Telescope help_tags<CR>", { noremap = true })
-vim.keymap.set("n", "<Leader>fs", ":Telescope lsp_document_symbols<CR>", { noremap = true })
-vim.keymap.set("n", "<Leader>fS", ":Telescope lsp_workspace_symbols<CR>", { noremap = true })
+vim.keymap.set("n", "<Leader>ff", function()
+  require("fzf-lua").files()
+end, { noremap = true })
+vim.keymap.set("n", "<Leader>fg", function()
+  require("fzf-lua").live_grep()
+end, { noremap = true })
+vim.keymap.set("n", "<Leader>fb", function()
+  require("fzf-lua").buffers()
+end, { noremap = true })
+vim.keymap.set("n", "<Leader>fh", function()
+  require("fzf-lua").help_tags()
+end, { noremap = true })
+vim.keymap.set("n", "<Leader>fs", function()
+  require("fzf-lua").lsp_document_symbols()
+end, { noremap = true })
+vim.keymap.set("n", "<Leader>fS", function()
+  require("fzf-lua").lsp_workspace_symbols()
+end, { noremap = true })
 
 vim.o.langmap = vim.o.langmap
   .. "чявертъуиопшщасдфгхйклзьцжбнмЧЯВЕРТЪУИОПШЩАСДФГХЙКЛЗѝЦЖБНМ;`qwertyuiop[]asdfghjklzxcvbnm~QWERTYUIOP{}ASDFGHJKLZXCVBNM,ю\\,Ю\\|,"
